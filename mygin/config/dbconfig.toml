@@ -1,0 +1,12 @@
+app_name = "awesome web"
+
+# possible values: DEBUG, INFO, WARNING, ERROR, FATAL
+log_level = "DEBUG"
+
+[mysql]
+ip = "192.168.96.128"
+port = "3306"
+user = "root"
+password = "KbAywB5VAeH8smaCf78z"
+database = "cloudflare"
+
