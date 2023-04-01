@@ -47,7 +47,7 @@
         </el-dialog>
 
         <!-- show dialog -->
-        <el-dialog v-model="showDialogTableVisible" title="DNS 解析">
+        <el-dialog v-model="showDialogTableVisible" title="DNS 解析" width="65%">
             <el-table :data="dnsList">
                 <el-table-column property="type" label="Type" width="80" />
                 <el-table-column property="name" label="Name" width="250" />

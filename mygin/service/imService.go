@@ -15,7 +15,7 @@ type Im struct {
 	ProjectName string `json:"projectName";gorm:"type:varchar(50);not null;comment:项目名"`
 	ServerIp    string `json:"serverip";gorm:"type:varchar(50);not null;comment:服务器ip"`
 	Groupid     string `json:"groupid";gorm:"type:varchar(50);comment:cdn对应组id"`
-	Josnconfig  string `json:"jsonconfig";gorm:"type:varchar(255);comment:json配置文件地址"`
+	Jsonconfig  string `json:"jsonconfig";gorm:"type:varchar(255);comment:json配置文件地址"`
 	Remark      string `json:"remark";gorm:"type:varchar(50);comment:备注"`
 }
 
@@ -40,7 +40,25 @@ func AddIm(c *gin.Context) {
 }
 
 func UpdateIm(c *gin.Context) {
-	return
+	var im Im
+	err := c.ShouldBind(&im)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	if err != nil {
+		log.Println(err.Error())
+	}
+	result := db.Model(&im).Where("id=?", im.ID).Save(&im)
+	if result.Error != nil {
+		log.Println(result.Error.Error())
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": 200,
+		"msg":  "更新成功",
+	})
 }
 
 func GetIm(c *gin.Context) {
@@ -61,5 +79,22 @@ func GetIm(c *gin.Context) {
 }
 
 func DeleteIm(c *gin.Context) {
-	return
+	var im Im
+	err := c.ShouldBind(&im)
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	if err != nil {
+		log.Println(err.Error())
+		return
+	}
+	result := db.Table("ims").Delete(&im)
+	if result.Error == nil {
+		c.JSON(http.StatusOK, gin.H{
+			"code": 200,
+			"msg":  "删除成功",
+		})
+	}
 }

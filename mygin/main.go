@@ -43,12 +43,20 @@ func main() {
 		userRouter.POST("/user", service.AddUser)
 		userRouter.PUT("/user", service.ChangePassword)
 	}
-	airborneRouter := r.Group("/airborne") //, middleware.JWTAuthMiddleware()
+	airborneRouter := r.Group("/airborne", middleware.JWTAuthMiddleware()) //, middleware.JWTAuthMiddleware()
 	{
 		airborneRouter.GET("", service.GetAirBorneList)
 		airborneRouter.POST("", service.AddAirBorne)
 		airborneRouter.PUT("", service.UpdateAirBorne)
 		airborneRouter.DELETE("", service.DeleteAirBorne)
+	}
+	imRouter := r.Group("/im") //, middleware.JWTAuthMiddleware()
+	{
+		imRouter.GET("", service.GetIm)
+		imRouter.POST("", service.AddIm)
+		imRouter.PUT("", service.UpdateIm)
+		imRouter.DELETE("", service.DeleteIm)
+		imRouter.POST("/line", service.GetLins)
 	}
 
 	r.Run()
