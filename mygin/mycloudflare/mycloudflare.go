@@ -4,7 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
-	"mygin/cfutils"
+	"mygin/myutils"
 	"time"
 
 	"github.com/cloudflare/cloudflare-go"
@@ -13,7 +13,7 @@ import (
 var api *cloudflare.API
 
 func init() {
-	api = cfutils.GetCfApi()
+	api = myutils.GetCfApi()
 }
 
 // 获取全部域名列表

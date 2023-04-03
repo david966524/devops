@@ -70,3 +70,18 @@ export interface Line{
     remark:string
     type:number
 }
+
+// asiacloudvhost 对象
+export interface Asiacloudvhost{
+    name:string
+}
+
+//asiacloudDomain 对象
+export interface AsiacloudDomain{
+    id?:number
+    domain:string
+    host:string
+    vhost:string
+    status?:number
+    cname:string
+}

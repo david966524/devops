@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
-	"mygin/cfutils"
+	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -47,7 +47,7 @@ func GetLins(c *gin.Context) {
 }
 
 func ReqLines(url string) []Line {
-	client := cfutils.HttpCline()
+	client := myutils.HttpCline()
 	var datas Datas
 	resp, err := client.R().SetResult(&datas).EnableTrace().Get(url)
 	if err != nil {

@@ -50,13 +50,23 @@ func main() {
 		airborneRouter.PUT("", service.UpdateAirBorne)
 		airborneRouter.DELETE("", service.DeleteAirBorne)
 	}
-	imRouter := r.Group("/im") //, middleware.JWTAuthMiddleware()
+	imRouter := r.Group("/im", middleware.JWTAuthMiddleware()) //, middleware.JWTAuthMiddleware()
 	{
 		imRouter.GET("", service.GetIm)
 		imRouter.POST("", service.AddIm)
 		imRouter.PUT("", service.UpdateIm)
 		imRouter.DELETE("", service.DeleteIm)
 		imRouter.POST("/line", service.GetLins)
+	}
+
+	asiacloudRouter := r.Group("/asiacloud") //, middleware.JWTAuthMiddleware()
+	{
+		asiacloudRouter.GET("/vhost", service.GetVhost)
+		asiacloudRouter.GET("/vhost/:vhost", service.GetVhostDomainlist)
+		// asiacloudRouter.POST("", service.AddIm)
+		// asiacloudRouter.PUT("", service.UpdateIm)
+		// asiacloudRouter.DELETE("", service.DeleteIm)
+		// asiacloudRouter.POST("/line", service.GetLins)
 	}
 
 	r.Run()

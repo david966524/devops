@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
-	"mygin/cfutils"
+	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,7 +11,7 @@ import (
 
 func GetUserList(c *gin.Context) {
 
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -33,7 +33,7 @@ func AddUser(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -58,7 +58,7 @@ func ChangePassword(c *gin.Context) {
 		return
 	}
 	log.Println("----change passwod" + user.UserName + user.PassWord)
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 		return

@@ -2,8 +2,8 @@ package service
 
 import (
 	"log"
-	"mygin/cfutils"
 	"mygin/myjwt"
+	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -24,7 +24,7 @@ func LoginUser(c *gin.Context) {
 		log.Println(err.Error())
 	}
 
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 	}

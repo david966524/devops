@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
-	"mygin/cfutils"
+	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -21,7 +21,7 @@ type AirBorne struct {
 func GetAirBorneList(c *gin.Context) {
 
 	var airBorneList []AirBorne
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -46,7 +46,7 @@ func AddAirBorne(c *gin.Context) {
 		return
 	}
 
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -69,7 +69,7 @@ func UpdateAirBorne(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 		return
@@ -94,7 +94,7 @@ func DeleteAirBorne(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 		return

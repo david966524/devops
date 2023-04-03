@@ -3,7 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
-	"mygin/cfutils"
+	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,7 +25,7 @@ func AddIm(c *gin.Context) {
 	if err != nil {
 		log.Println(err.Error())
 	}
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		fmt.Println(err.Error())
 	}
@@ -46,7 +46,7 @@ func UpdateIm(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -63,7 +63,7 @@ func UpdateIm(c *gin.Context) {
 
 func GetIm(c *gin.Context) {
 	var ims []Im
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 	}
@@ -85,7 +85,7 @@ func DeleteIm(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := cfutils.ConnectMysqlByDatabaseSql()
+	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 		return

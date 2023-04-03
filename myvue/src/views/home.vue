@@ -11,7 +11,7 @@
             </template>
             <el-menu-item index="/cloudflare">Couldflare</el-menu-item>
             <el-menu-item index="">方能</el-menu-item>
-
+            <el-menu-item index="/asiacloud">亚洲云海</el-menu-item>
             <el-sub-menu index="1-1">
               <template #title>项目</template>
               <el-menu-item index="/airborne">空降平台信息</el-menu-item>
@@ -20,7 +20,7 @@
           </el-sub-menu>
           <el-sub-menu index="2">
             <template #title>
-              <el-icon><icon-menu /></el-icon>工具
+              <el-icon><ChromeFilled /></el-icon>工具
             </template>
             <el-menu-item-group>
               <template #title>DNS Tools</template>
