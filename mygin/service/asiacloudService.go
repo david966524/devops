@@ -90,20 +90,53 @@ func GetVhostDomainlist(c *gin.Context) {
 	})
 }
 
+func AddDomain(c *gin.Context) {
+	vhost := c.Param("vhost")
+	var domain DomainDetails
+	log.Println("请求的 vhost :" + vhost)
+	err := c.ShouldBind(&domain)
+	if err != nil {
+		log.Println(err.Error())
+	}
+	log.Println(domain)
+	client := myutils.HttpCline()
+	asiaCloudToken := myutils.GetAsiaCloudToken()
+	addDomainUrl := "https://cdnportal.myasiacloud.com/api/site/" + vhost + "/domain"
+	resp, err1 := client.R().
+		EnableTrace().
+		SetHeader("Content-Type", "application/json").
+		SetHeader("Authorization", "Bearer "+asiaCloudToken).
+		SetBody(&domain).
+		Post(addDomainUrl)
+	if err1 != nil {
+		log.Println(err1.Error())
+	}
+	var reqbody myutils.ResponseBody
+	err2 := json.Unmarshal(resp.Body(), &reqbody)
+	log.Println(reqbody)
+	if err2 != nil {
+		log.Println(err2.Error())
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": reqbody.Code,
+		"msg":  reqbody.Message,
+	})
+}
+
 func reqDomainlist(vhost string) *DomainResult {
 	client := myutils.HttpCline()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
 	var domainResult DomainResult
 	getdomaintUrl := "https://cdnportal.myasiacloud.com/api/site/" + vhost + "/domain/page"
-	resp1, err1 := client.R().
+	resp, err := client.R().
 		EnableTrace().
 		SetHeader("Content-Type", "application/json").
 		SetHeader("Authorization", "Bearer "+asiaCloudToken).
 		Get(getdomaintUrl)
 
-	if err1 != nil {
-		fmt.Println(err1.Error())
+	if err != nil {
+		fmt.Println(err.Error())
 	}
-	json.Unmarshal(resp1.Body(), &domainResult)
+	json.Unmarshal(resp.Body(), &domainResult)
 	return &domainResult
 }

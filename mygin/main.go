@@ -59,11 +59,11 @@ func main() {
 		imRouter.POST("/line", service.GetLins)
 	}
 
-	asiacloudRouter := r.Group("/asiacloud") //, middleware.JWTAuthMiddleware()
+	asiacloudRouter := r.Group("/asiacloud", middleware.JWTAuthMiddleware()) //, middleware.JWTAuthMiddleware()
 	{
 		asiacloudRouter.GET("/vhost", service.GetVhost)
 		asiacloudRouter.GET("/vhost/:vhost", service.GetVhostDomainlist)
-		// asiacloudRouter.POST("", service.AddIm)
+		asiacloudRouter.POST("/vhost/:vhost", service.AddDomain)
 		// asiacloudRouter.PUT("", service.UpdateIm)
 		// asiacloudRouter.DELETE("", service.DeleteIm)
 		// asiacloudRouter.POST("/line", service.GetLins)

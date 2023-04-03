@@ -81,7 +81,7 @@ export interface AsiacloudDomain{
     id?:number
     domain:string
     host:string
-    vhost:string
+    vhost?:string
     status?:number
-    cname:string
+    cname?:string
 }

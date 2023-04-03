@@ -7,3 +7,7 @@ export const VhostList = ()=>{
 export const GetDomain = (url:string)=>{
     return axios.get<AsiacloudDomain[]>("/api/asiacloud/vhost/"+url)
 }
+
+export const AddDomain = (asiacloudDomain:AsiacloudDomain)=>{
+    return axios.post("/api/asiacloud/vhost/"+asiacloudDomain.vhost,asiacloudDomain)
+}
