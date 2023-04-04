@@ -10,9 +10,10 @@
             <el-table-column prop="status" label="status" />
             <el-table-column prop="cname" label="cname" />
             <el-table-column fixed="right" label="Operations" width="120">
-                <template #default>
+                <template #default="scope">
                     <el-button link type="primary" size="small" @click="">Detail</el-button>
                     <el-button link type="primary" size="small">Edit</el-button>
+                    <el-button link type="primary" size="small"  @click="deleteDomain(scope.row)">delete</el-button>
                 </template>
             </el-table-column>
         </el-table>
@@ -47,21 +48,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted ,onBeforeMount} from 'vue'
 import type { TabsPaneContext } from 'element-plus'
 import { Asiacloudvhost, AsiacloudDomain } from '../interface/index'
-import { VhostList, GetDomain, AddDomain } from '../api/asiacloudapi'
+import { VhostList, GetDomain, AddDomain,DeleteDomain } from '../api/asiacloudapi'
 import { ElMessage } from 'element-plus'
-// const tabs = [
-//   { label: 'User', name: 'first', content: 'User' },
-//   { label: 'Config', name: 'second', content: 'Config' },
-//   { label: 'Role', name: 'third', content: 'Role' },
-//   { label: 'Task', name: 'fourth', content: 'Task' }
-// ]
 
 
-
-onMounted(() => {
+onBeforeMount(() => {
     getVhosts()
 })
 const formdomain = ref<AsiacloudDomain>({
@@ -96,6 +90,22 @@ const addDomain = async () => {
         })
         dialogFormVisible.value=true
 }
+
+const deleteDomain = async (row:AsiacloudDomain)=>{
+    console.log("id = "+row.id)
+    console.log("vhost = "+row.vhost)
+    const data = await DeleteDomain(row)
+    if (data.code !=200 ){
+        ElMessage.error(data.msg)
+        return
+    }
+    ElMessage({
+            message: data.msg,
+            type: 'success',
+        })
+    
+}
+
 
 const getVhosts = async () => {
     const data = await VhostList()

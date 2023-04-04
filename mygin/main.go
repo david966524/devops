@@ -1,14 +1,15 @@
 package main
 
 import (
-	"mygin/middleware"
+	"mygin/myutils"
+	"mygin/router"
 	"mygin/service"
 
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 )
 
-func main() {
+func startServer() *gin.Engine {
 	r := gin.Default()
 
 	// 跨域问题
@@ -17,57 +18,21 @@ func main() {
 	r.Use(cors.New(config))
 
 	//router
-	// r.GET("/cloudflare", service.GetCloudFlare)
-	// r.GET("/cloudflare/:domainname", service.QueryCloudFlare)
-	// r.POST("/cloudflare", service.AddCloudflare)
-	// r.DELETE("/cloudflare", service.DeleteCloudflare)
-	// r.GET("/cloudflare/dns/:domainname", service.GetDomainDns)
-	// r.POST("/cloudflare/dns/:domainId", service.AddDnsRecord)
-	// r.DELETE("/cloudflare/dns/", service.DeleteDnsRecord)
-
-	// r.POST("/user/login", service.LoginUser)
 	r.POST("/login", service.LoginUser)
-	cfRouter := r.Group("/cloudflare", middleware.JWTAuthMiddleware())
-	{
-		cfRouter.GET("", service.GetCloudFlare)
-		cfRouter.GET("/:domainname", service.QueryCloudFlare)
-		cfRouter.POST("", service.AddCloudflare)
-		cfRouter.DELETE("", service.DeleteCloudflare)
-		cfRouter.GET("/dns/:domainname", service.GetDomainDns)
-		cfRouter.POST("/dns/:domainId", service.AddDnsRecord)
-		cfRouter.DELETE("/dns/", service.DeleteDnsRecord)
-	}
-	userRouter := r.Group("/system", middleware.JWTAuthMiddleware())
-	{
-		userRouter.GET("/user", service.GetUserList)
-		userRouter.POST("/user", service.AddUser)
-		userRouter.PUT("/user", service.ChangePassword)
-	}
-	airborneRouter := r.Group("/airborne", middleware.JWTAuthMiddleware()) //, middleware.JWTAuthMiddleware()
-	{
-		airborneRouter.GET("", service.GetAirBorneList)
-		airborneRouter.POST("", service.AddAirBorne)
-		airborneRouter.PUT("", service.UpdateAirBorne)
-		airborneRouter.DELETE("", service.DeleteAirBorne)
-	}
-	imRouter := r.Group("/im", middleware.JWTAuthMiddleware()) //, middleware.JWTAuthMiddleware()
-	{
-		imRouter.GET("", service.GetIm)
-		imRouter.POST("", service.AddIm)
-		imRouter.PUT("", service.UpdateIm)
-		imRouter.DELETE("", service.DeleteIm)
-		imRouter.POST("/line", service.GetLins)
-	}
+	router.CfRouter(r)
+	router.UserRouter(r)
+	router.AsiacloudRouter(r)
+	router.AirborneRouter(r)
+	router.ImRouter(r)
 
-	asiacloudRouter := r.Group("/asiacloud", middleware.JWTAuthMiddleware()) //, middleware.JWTAuthMiddleware()
-	{
-		asiacloudRouter.GET("/vhost", service.GetVhost)
-		asiacloudRouter.GET("/vhost/:vhost", service.GetVhostDomainlist)
-		asiacloudRouter.POST("/vhost/:vhost", service.AddDomain)
-		// asiacloudRouter.PUT("", service.UpdateIm)
-		// asiacloudRouter.DELETE("", service.DeleteIm)
-		// asiacloudRouter.POST("/line", service.GetLins)
-	}
+	logger := myutils.GetLogger()
+	logger.Info("this is  日志")
 
-	r.Run()
+	return r
+}
+
+func main() {
+	myutils.InitLogger()
+	startServer().Run()
+
 }

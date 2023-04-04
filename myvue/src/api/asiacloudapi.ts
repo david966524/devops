@@ -11,3 +11,8 @@ export const GetDomain = (url:string)=>{
 export const AddDomain = (asiacloudDomain:AsiacloudDomain)=>{
     return axios.post("/api/asiacloud/vhost/"+asiacloudDomain.vhost,asiacloudDomain)
 }
+
+export const DeleteDomain = (asiacloudDomain:AsiacloudDomain) =>{
+    return axios.delete("/api/asiacloud/vhost/"+asiacloudDomain.vhost+"/"+asiacloudDomain.id)
+
+}

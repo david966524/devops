@@ -54,6 +54,11 @@ type DomainPublicSetting struct {
 	Portmap       int    `json:"portmap"`
 }
 
+type DeleteDomaindome struct {
+	Id    string `json:"id";form:"id"`
+	Vhost string `json:"vhost";form:"vhost"`
+}
+
 //////////////////////////////////////////////////////////
 
 func GetVhost(c *gin.Context) {
@@ -123,6 +128,17 @@ func AddDomain(c *gin.Context) {
 	})
 }
 
+func DeleteAsiacloudDomain(c *gin.Context) {
+	vhost := c.Param("vhost")
+	id := c.Param("id")
+	result := reqDeleteDomain(id, vhost)
+
+	c.JSON(http.StatusOK, gin.H{
+		"code": result.Code,
+		"msg":  result.Message,
+	})
+}
+
 func reqDomainlist(vhost string) *DomainResult {
 	client := myutils.HttpCline()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
@@ -138,5 +154,26 @@ func reqDomainlist(vhost string) *DomainResult {
 		fmt.Println(err.Error())
 	}
 	json.Unmarshal(resp.Body(), &domainResult)
+	return &domainResult
+}
+
+func reqDeleteDomain(id string, vhost string) *DomainResult {
+	deletedomaintUrl := fmt.Sprintf("https://cdnportal.myasiacloud.com/api/site/%v/domain/%v", vhost, id)
+	client := myutils.HttpCline()
+	asiaCloudToken := myutils.GetAsiaCloudToken()
+	resq, err := client.R().
+		EnableTrace().
+		SetHeader("Content-Type", "application/json").
+		SetHeader("Authorization", "Bearer "+asiaCloudToken).
+		Delete(deletedomaintUrl)
+	if err != nil {
+		log.Println(err.Error())
+		return nil
+	}
+	var domainResult DomainResult
+	jsonerr := json.Unmarshal(resq.Body(), &domainResult)
+	if jsonerr != nil {
+		log.Println(jsonerr.Error())
+	}
 	return &domainResult
 }
