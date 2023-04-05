@@ -3,24 +3,16 @@ package service
 import (
 	"fmt"
 	"log"
+	"mygin/model"
 	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
-
-type AirBorne struct {
-	gorm.Model
-	ProjectName string `json:"projectName";form:"projectName";gorm:"type:varchar(50);not null;comment:项目名"`
-	ServerIp    string `json:"serverip";form:"serverip";gorm:"type:varchar(50);not null;comment:服务器ip"`
-	Groupid     string `json:"groupid";form:"groupid";gorm:"type:varchar(50);comment:方能对应组id"`
-	Remark      string `json:"remark";form:"remark";gorm:"type:varchar(50);comment:备注"`
-}
 
 func GetAirBorneList(c *gin.Context) {
 
-	var airBorneList []AirBorne
+	var airBorneList []model.AirBorne
 	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
@@ -39,7 +31,7 @@ func GetAirBorneList(c *gin.Context) {
 }
 
 func AddAirBorne(c *gin.Context) {
-	var airBorne AirBorne
+	var airBorne model.AirBorne
 	err := c.ShouldBind(&airBorne)
 	if err != nil {
 		log.Println(err.Error())
@@ -63,7 +55,7 @@ func AddAirBorne(c *gin.Context) {
 }
 
 func UpdateAirBorne(c *gin.Context) {
-	var ab AirBorne
+	var ab model.AirBorne
 	err := c.ShouldBind(&ab)
 	if err != nil {
 		log.Println(err.Error())
@@ -86,7 +78,7 @@ func UpdateAirBorne(c *gin.Context) {
 }
 
 func DeleteAirBorne(c *gin.Context) {
-	var ab AirBorne
+	var ab model.AirBorne
 	err := c.ShouldBind(&ab)
 	log.Printf("%v --------------------------", &ab)
 

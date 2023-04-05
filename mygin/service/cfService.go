@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
+	"mygin/model"
 	"mygin/mycloudflare"
 	"net/http"
 
@@ -37,16 +38,11 @@ func QueryCloudFlare(c *gin.Context) {
 // 需要注意的是，在结构体的每个字段上，我们使用了一个带有"json"标签的注释。这样可以告诉Gin框架使用POST参数的值来填充每个字段。例如，如果POST参数中存在名为"domainName"的参数，它的值将被填充到CloudflareRequest结构体的DomainName字段中。
 
 // 另外，如果您想手动解析POST参数而不是使用结构体绑定功能，可以使用context对象的PostForm()方法来获取单个POST参数，或者使用context对象的Request.PostForm属性来获取所有的POST参数。具体实现方式与之前的回答相同，这里不再赘述。
-type CloudflareRequest struct {
-	DomainName  string `form:"domainName"`
-	DomainId    string `form:"domainId"`
-	DnsRecordId string `form:"dnsRecordId"`
-}
 
 func AddCloudflare(c *gin.Context) {
 
 	//fmt.Println(result)
-	var req CloudflareRequest
+	var req model.CloudflareRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
 		panic(err)
@@ -63,7 +59,7 @@ func AddCloudflare(c *gin.Context) {
 }
 
 func DeleteCloudflare(c *gin.Context) {
-	var req CloudflareRequest
+	var req model.CloudflareRequest
 	c.ShouldBind(&req)
 	log.Println("需要删除的domain ID:" + req.DomainId)
 	result := mycloudflare.DeleteDomain(req.DomainId)
@@ -117,7 +113,7 @@ func AddDnsRecord(c *gin.Context) {
 func DeleteDnsRecord(c *gin.Context) {
 	//domainId := c.Param("domainId")
 	//fmt.Println(domainId)
-	var req CloudflareRequest
+	var req model.CloudflareRequest
 	c.ShouldBind(&req)
 	log.Println("要删除的domainid :" + req.DomainId)
 	log.Println("要删除的dnsid :" + req.DnsRecordId)

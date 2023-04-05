@@ -13,9 +13,21 @@
             <el-menu-item index="">方能</el-menu-item>
             <el-menu-item index="/asiacloud">亚洲云海</el-menu-item>
             <el-sub-menu index="1-1">
-              <template #title>项目</template>
+              <template #title>包网项目</template>
               <el-menu-item index="/airborne">空降平台信息</el-menu-item>
               <el-menu-item index="/im">IM</el-menu-item>
+            </el-sub-menu>
+          </el-sub-menu>
+           <el-sub-menu index="4">
+            <template #title>
+              <el-icon>
+                <icon-menu />
+              </el-icon>服务器
+            </template>
+            <el-sub-menu index="4-1">
+              <template #title>aliyun</template>
+              <el-menu-item index="">服务器列表</el-menu-item>
+              <el-menu-item index="">list</el-menu-item>
             </el-sub-menu>
           </el-sub-menu>
           <el-sub-menu index="2">

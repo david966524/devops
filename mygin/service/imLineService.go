@@ -3,34 +3,15 @@ package service
 import (
 	"fmt"
 	"log"
+	"mygin/model"
 	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type Line struct {
-	BaseUrl    string `json:"base_url"`
-	ResUrl     string `json:"res_url"`
-	SocketIP   string `json:"socket_ip"`
-	SocketPort int    `json:"socket_port"`
-	Timeout    int    `json:"timeout"`
-	Ssl        int    `json:"ssl"`
-	Remark     string `json:"remark"`
-	Type       int    `json:"type"`
-}
-
-type Data struct {
-	Lines []Line `json:"lines"`
-}
-
-type Datas struct {
-	Data Data `json:"data"`
-	Ok   bool `json:"ok"`
-}
-
 func GetLins(c *gin.Context) {
-	var im Im
+	var im model.Im
 	err := c.ShouldBind(&im)
 	if err != nil {
 		log.Println(err.Error())
@@ -46,9 +27,9 @@ func GetLins(c *gin.Context) {
 	}
 }
 
-func ReqLines(url string) []Line {
+func ReqLines(url string) []model.Line {
 	client := myutils.HttpCline()
-	var datas Datas
+	var datas model.Datas
 	resp, err := client.R().SetResult(&datas).EnableTrace().Get(url)
 	if err != nil {
 		fmt.Println(err.Error())

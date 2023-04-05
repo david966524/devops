@@ -1,8 +1,6 @@
 package myutils
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"fmt"
 	"log"
 	"strconv"
@@ -71,11 +69,4 @@ func GetAsiaCloudToken() string {
 	fmt.Println(string(resp.Body()))
 	asiaCloudToken := myresule.Data.Token
 	return asiaCloudToken
-}
-
-func MD5(v string) string {
-	d := []byte(v)
-	m := md5.New()
-	m.Write(d)
-	return hex.EncodeToString(m.Sum(nil))
 }

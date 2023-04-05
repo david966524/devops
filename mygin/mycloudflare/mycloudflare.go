@@ -4,8 +4,8 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"mygin/model"
 	"mygin/myutils"
-	"time"
 
 	"github.com/cloudflare/cloudflare-go"
 )
@@ -17,7 +17,7 @@ func init() {
 }
 
 // 获取全部域名列表
-func GetAllDomain() []Myzone {
+func GetAllDomain() []model.Myzone {
 	//api, err := cloudflare.New("300c6bba9f8c1cb0ae3a436d1828639c1b9ab", "2898802425@qq.com")
 	// api := cfutils.GetCfApi()
 	fmt.Println(api)
@@ -28,7 +28,7 @@ func GetAllDomain() []Myzone {
 		// 处理错误
 		fmt.Println(err.Error())
 	}
-	var MyzoneSlice []Myzone
+	var MyzoneSlice []model.Myzone
 	for _, cz := range resp {
 		myzone := toMyzone(cz)
 		MyzoneSlice = append(MyzoneSlice, myzone)
@@ -37,7 +37,7 @@ func GetAllDomain() []Myzone {
 }
 
 // 查询单个域名
-func QueryDomain(Doname string) []Myzone {
+func QueryDomain(Doname string) []model.Myzone {
 	// api := cfutils.GetCfApi()
 	resp, err := api.ListZones(context.Background(), Doname)
 	if err != nil {
@@ -46,7 +46,7 @@ func QueryDomain(Doname string) []Myzone {
 	}
 	fmt.Println(resp)
 
-	var MyzoneSlice []Myzone
+	var MyzoneSlice []model.Myzone
 	for _, cz := range resp {
 		myzone := toMyzone(cz)
 		MyzoneSlice = append(MyzoneSlice, myzone)
@@ -56,7 +56,7 @@ func QueryDomain(Doname string) []Myzone {
 }
 
 // 添加单个域名
-func AddDomain(domainName string) []Myzone {
+func AddDomain(domainName string) []model.Myzone {
 	// api := cfutils.GetCfApi()
 	zoneParams := cloudflare.ZoneCreateParams{
 		Name:      domainName,
@@ -67,7 +67,7 @@ func AddDomain(domainName string) []Myzone {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	var MyzoneSlice []Myzone
+	var MyzoneSlice []model.Myzone
 	myzone := toMyzone(zone)
 	MyzoneSlice = append(MyzoneSlice, myzone)
 
@@ -134,20 +134,9 @@ func DeleteDnsRecord(zone_id string, recordID string) (bool, string) {
 	return true, "delete Success"
 }
 
-// zone 结构体 定义所需要的 字段
-type Myzone struct {
-	ID          string    `json:"id"`
-	Name        string    `json:"name"`
-	CreatedOn   time.Time `json:"created_on"`
-	ModifiedOn  time.Time `json:"modified_on"`
-	NameServers []string  `json:"name_servers"`
-	Status      string    `json:"status"`
-	Type        string    `json:"type"`
-}
-
 // cloudflare.zong 转换成 myzone
-func toMyzone(cz cloudflare.Zone) Myzone {
-	return Myzone{
+func toMyzone(cz cloudflare.Zone) model.Myzone {
+	return model.Myzone{
 		ID:          cz.ID,
 		Name:        cz.Name,
 		CreatedOn:   cz.CreatedOn,

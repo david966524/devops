@@ -3,6 +3,7 @@ package service
 import (
 	"fmt"
 	"log"
+	"mygin/model"
 	"mygin/myutils"
 	"net/http"
 
@@ -15,7 +16,7 @@ func GetUserList(c *gin.Context) {
 	if err != nil {
 		log.Println(err.Error())
 	}
-	var users []User
+	var users []model.User
 	result := db.Find(&users)
 	fmt.Println(result.RowsAffected)
 	log.Println(users)
@@ -27,7 +28,7 @@ func GetUserList(c *gin.Context) {
 }
 
 func AddUser(c *gin.Context) {
-	var user User
+	var user model.User
 	err := c.ShouldBind(&user)
 	if err != nil {
 		log.Println(err.Error())
@@ -51,7 +52,7 @@ func AddUser(c *gin.Context) {
 }
 
 func ChangePassword(c *gin.Context) {
-	var user User
+	var user model.User
 	err := c.ShouldBind(&user)
 	if err != nil {
 		log.Println(err.Error())

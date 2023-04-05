@@ -3,24 +3,15 @@ package service
 import (
 	"fmt"
 	"log"
+	"mygin/model"
 	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"gorm.io/gorm"
 )
 
-type Im struct {
-	gorm.Model
-	ProjectName string `json:"projectName";gorm:"type:varchar(50);not null;comment:项目名"`
-	ServerIp    string `json:"serverip";gorm:"type:varchar(50);not null;comment:服务器ip"`
-	Groupid     string `json:"groupid";gorm:"type:varchar(50);comment:cdn对应组id"`
-	Jsonconfig  string `json:"jsonconfig";gorm:"type:varchar(255);comment:json配置文件地址"`
-	Remark      string `json:"remark";gorm:"type:varchar(50);comment:备注"`
-}
-
 func AddIm(c *gin.Context) {
-	var im Im
+	var im model.Im
 	err := c.ShouldBind(&im)
 	if err != nil {
 		log.Println(err.Error())
@@ -40,7 +31,7 @@ func AddIm(c *gin.Context) {
 }
 
 func UpdateIm(c *gin.Context) {
-	var im Im
+	var im model.Im
 	err := c.ShouldBind(&im)
 	if err != nil {
 		log.Println(err.Error())
@@ -62,7 +53,7 @@ func UpdateIm(c *gin.Context) {
 }
 
 func GetIm(c *gin.Context) {
-	var ims []Im
+	var ims []model.Im
 	db, err := myutils.ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
@@ -79,7 +70,7 @@ func GetIm(c *gin.Context) {
 }
 
 func DeleteIm(c *gin.Context) {
-	var im Im
+	var im model.Im
 	err := c.ShouldBind(&im)
 	if err != nil {
 		log.Println(err.Error())

@@ -13,8 +13,7 @@ func AsiacloudRouter(r *gin.Engine) {
 		asiacloudRouter.GET("/vhost", service.GetVhost)
 		asiacloudRouter.GET("/vhost/:vhost", service.GetVhostDomainlist)
 		asiacloudRouter.POST("/vhost/:vhost", service.AddDomain)
-		// asiacloudRouter.PUT("", service.UpdateIm)
+		asiacloudRouter.PUT("/vhost", service.UpdateDomain)
 		asiacloudRouter.DELETE("/vhost/:vhost/:id", service.DeleteAsiacloudDomain)
-		// asiacloudRouter.POST("/line", service.GetLins)
 	}
 }

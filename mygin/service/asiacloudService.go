@@ -4,67 +4,19 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"mygin/model"
 	"mygin/myutils"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
-type VhostResult struct {
-	myutils.ResponseBody
-	Data struct {
-		Total int `json:"total"`
-		List  []struct {
-			Name   string `json:"name"`
-			Pid    int    `json:"pid"`
-			Status int    `json:"status"`
-		} `json:"list"`
-	} `json:"data"`
-}
-
-type DomainResult struct {
-	Code    int        `json:"code"`
-	Message string     `json:"message"`
-	Data    DomainData `json:"data"`
-}
-
-type DomainData struct {
-	Total int             `json:"total"`
-	List  []DomainDetails `json:"list"`
-}
-
-type DomainDetails struct {
-	ID            int                 `json:"id"`
-	Domain        string              `json:"domain"`
-	Host          string              `json:"host"`
-	Vhost         string              `json:"vhost"`
-	Status        int                 `json:"status"`
-	Cname         string              `json:"cname"`
-	PublicSetting DomainPublicSetting `json:"publicSetting"`
-}
-
-type DomainPublicSetting struct {
-	Sslcsr        string `json:"sslcsr"`
-	Sslkey        string `json:"sslkey"`
-	Hash          string `json:"hash"`
-	Hsts          int    `json:"hsts"`
-	ForceSSL      int    `json:"force_ssl"`
-	MaxErrorCount string `json:"max_error_count"`
-	ErrorTryTime  string `json:"error_try_time"`
-	Portmap       int    `json:"portmap"`
-}
-
-type DeleteDomaindome struct {
-	Id    string `json:"id";form:"id"`
-	Vhost string `json:"vhost";form:"vhost"`
-}
-
 //////////////////////////////////////////////////////////
 
 func GetVhost(c *gin.Context) {
 	client := myutils.HttpCline()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
-	var vhostResult VhostResult
+	var vhostResult model.VhostResult
 	vhostUrl := "https://cdnportal.myasiacloud.com/api/proxy/vhost"
 	resp, err := client.R().
 		SetHeader("Content-Type", "application/json").
@@ -97,7 +49,7 @@ func GetVhostDomainlist(c *gin.Context) {
 
 func AddDomain(c *gin.Context) {
 	vhost := c.Param("vhost")
-	var domain DomainDetails
+	var domain model.DomainDetails
 	log.Println("请求的 vhost :" + vhost)
 	err := c.ShouldBind(&domain)
 	if err != nil {
@@ -139,10 +91,10 @@ func DeleteAsiacloudDomain(c *gin.Context) {
 	})
 }
 
-func reqDomainlist(vhost string) *DomainResult {
+func reqDomainlist(vhost string) *model.DomainResult {
 	client := myutils.HttpCline()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
-	var domainResult DomainResult
+	var domainResult model.DomainResult
 	getdomaintUrl := "https://cdnportal.myasiacloud.com/api/site/" + vhost + "/domain/page"
 	resp, err := client.R().
 		EnableTrace().
@@ -157,7 +109,7 @@ func reqDomainlist(vhost string) *DomainResult {
 	return &domainResult
 }
 
-func reqDeleteDomain(id string, vhost string) *DomainResult {
+func reqDeleteDomain(id string, vhost string) *model.DomainResult {
 	deletedomaintUrl := fmt.Sprintf("https://cdnportal.myasiacloud.com/api/site/%v/domain/%v", vhost, id)
 	client := myutils.HttpCline()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
@@ -170,10 +122,16 @@ func reqDeleteDomain(id string, vhost string) *DomainResult {
 		log.Println(err.Error())
 		return nil
 	}
-	var domainResult DomainResult
+	var domainResult model.DomainResult
 	jsonerr := json.Unmarshal(resq.Body(), &domainResult)
 	if jsonerr != nil {
 		log.Println(jsonerr.Error())
 	}
 	return &domainResult
+}
+
+func UpdateDomain(c *gin.Context) {
+	var domainDetails model.DomainDetails
+	c.ShouldBind(&domainDetails)
+	log.Println(domainDetails)
 }

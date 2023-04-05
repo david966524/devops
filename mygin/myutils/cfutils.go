@@ -8,12 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-type CloudFlareAccount struct {
-	gorm.Model
-	Email string `gorm:"type:varchar(50);not null;comment:邮箱"`
-	Key   string `gorm:"type:varchar(50);not null;comment:密钥"`
-}
-
 func GetCfApi() *cloudflare.API {
 	db, err := ConnectMysqlByDatabaseSql()
 	if err != nil {
@@ -28,4 +22,10 @@ func GetCfApi() *cloudflare.API {
 		fmt.Println(err)
 	}
 	return api
+}
+
+type CloudFlareAccount struct {
+	gorm.Model
+	Email string `gorm:"type:varchar(50);not null;comment:邮箱"`
+	Key   string `gorm:"type:varchar(50);not null;comment:密钥"`
 }

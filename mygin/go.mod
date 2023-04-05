@@ -3,6 +3,7 @@ module mygin
 go 1.20
 
 require (
+	github.com/alibabacloud-go/ecs-20140526/v3 v3.0.5 // indirect
 	github.com/appleboy/gin-jwt/v2 v2.9.1 // indirect
 	github.com/bytedance/sonic v1.8.3 // indirect
 	github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311 // indirect

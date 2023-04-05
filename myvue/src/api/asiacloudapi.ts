@@ -16,3 +16,7 @@ export const DeleteDomain = (asiacloudDomain:AsiacloudDomain) =>{
     return axios.delete("/api/asiacloud/vhost/"+asiacloudDomain.vhost+"/"+asiacloudDomain.id)
 
 }
+
+export const UpdateDomain = (asiacloudDomain:AsiacloudDomain) =>{
+    return axios.put("/api/asiacloud/vhost/",asiacloudDomain)
+}
