@@ -13,7 +13,7 @@ type MyClaims struct {
 }
 
 // 定义过期时间
-const TokenExpireDuration = time.Hour * 1
+const TokenExpireDuration = time.Hour * 12
 
 //const TokenExpireDuration = time.Second * 60
 

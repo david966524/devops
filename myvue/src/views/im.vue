@@ -44,8 +44,46 @@
 
     <!-- show line table  -->
     <el-dialog v-model="dialogTableVisible" title="线路表" width="70%">
-        <el-table :data="lines">
-            <el-table-column property="base_url" label="线路"  width="220"/>
+        <dev>
+            <el-form :inline="true" :model="formInline" class="demo-form-inline">
+                <el-form-item label="线路域名">
+                    <el-input v-model="formInline.base_url" placeholder="线路域名" />
+                </el-form-item>
+                <el-form-item label="资源域名">
+                    <el-input v-model="formInline.res_url" placeholder="资源域名" />
+                </el-form-item>
+                <el-form-item label="socket ip">
+                    <el-input v-model="formInline.socket_ip" placeholder="socket ip" />
+                </el-form-item>
+                <el-form-item label="port">
+                    <el-select v-model="formInline.socket_port" placeholder="port">
+                        <el-option label="9326" value="9326" />
+                        <el-option label="9325" value="9325" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="ssl">
+                    <el-select v-model="formInline.ssl" placeholder="ssl">
+                        <el-option label="1" value="1" />
+                        <el-option label="2" value="2" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="type">
+                    <el-select v-model="formInline.type" placeholder="type">
+                        <el-option label="0" value="0" />
+                        <el-option label="1" value="1" />
+                    </el-select>
+                </el-form-item>
+                <el-form-item label="备注">
+                    <el-input v-model="formInline.remark" placeholder="备注" />
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="addline()">添加</el-button>
+                </el-form-item>
+            </el-form>
+        </dev>
+        <el-table :data="lines" :edit-config="{ editMethod: 'cell' }">
+            <el-table-column property="base_url" label="线路" width="220">
+            </el-table-column>
             <el-table-column property="res_url" label="资源线路" width="220" />
             <el-table-column property="socket_ip" label="socket ip" />
             <el-table-column property="socket_port" label="socket port" />
@@ -53,11 +91,21 @@
             <el-table-column property="ssl" label="ssl" />
             <el-table-column property="remark" label="备注" />
             <el-table-column property="type" label="type" />
+            <el-table-column fixed="right" label="Operations">
+                <template #default="scope">
+                    <el-button link type="primary" size="small" @click="deleteLine(scope.$index)">删除</el-button>
+                </template>
+            </el-table-column>
         </el-table>
+        <div>
+            <el-button type="primary" @click="saveLines()">save</el-button>
+        </div>
     </el-dialog>
 
-          <!-- editdialog -->
-          <el-dialog v-model="dialogEditFormVisible" title="编辑新包网">
+
+
+    <!-- editdialog -->
+    <el-dialog v-model="dialogEditFormVisible" title="编辑新包网">
         <el-form :model="im" label-width="120px">
             <el-form-item label="包网名">
                 <el-input v-model="im.projectName" />
@@ -85,8 +133,8 @@
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
-import { AddIm, GetImList, DeleteIm ,UpdateIm} from '../api/imapi';
-import { GetImLine } from '../api/imLinesapi'
+import { AddIm, GetImList, DeleteIm, UpdateIm } from '../api/imapi';
+import { GetImLine, ChangeLine } from '../api/imLinesapi'
 import { Im, Line } from '../interface';
 import { ElMessage } from 'element-plus'
 
@@ -96,14 +144,24 @@ onMounted(() => {
 
 const dialogFormVisible = ref(false)
 const dialogTableVisible = ref(false)
-const dialogEditFormVisible =ref(false)
+const dialogEditFormVisible = ref(false)
 const im = ref<Im>({
     projectName: "",
     serverip: "",
 })
 
 const ims = ref<Im[]>()
-const lines = ref<Line[]>()
+const lines = ref<Line[]>([])
+const formInline = ref<Line>({
+    base_url:"",
+    res_url:"",
+    socket_ip:"",
+    socket_port: 9326 ,
+    timeout: 30000,
+    ssl: 2 ,
+    remark: "",
+    type: 0
+})
 
 const deleteIm = async (row: Im) => {
     const data = await DeleteIm(row)
@@ -134,20 +192,20 @@ const getIms = async () => {
     ims.value = data.data
 }
 
-const showdialog = (row:Im)=>{
-    dialogEditFormVisible.value=true
+const showdialog = (row: Im) => {
+    dialogEditFormVisible.value = true
     im.value = row
     console.log(im.value)
 }
 
-const updataIm = async ()=>{
+const updataIm = async () => {
     const data = await UpdateIm(im.value)
     if (data.code == 200) {
         ElMessage({
             message: data.msg,
             type: 'success',
         })
-        dialogEditFormVisible.value=false
+        dialogEditFormVisible.value = false
         getIms()
     }
 }
@@ -157,8 +215,42 @@ const updataIm = async ()=>{
 const getLines = async (row: Im) => {
     dialogTableVisible.value = true
     const data = await GetImLine(row)
-    lines.value = data.data
+    lines.value = <Line[]>data.data
     console.log(lines.value)
+    imid.value = <string>row.ID
+    formInline.value = {
+        timeout:30000,
+        res_url: lines.value[0].res_url,
+        socket_ip: lines.value[0].socket_ip
+    }
+}
+
+const deleteLine = async (index: number) => {
+    console.log(index)
+    lines.value?.splice(index, 1)
+}
+const imid = ref<string>()
+const saveLines = async () => {
+    console.log(lines.value)
+    console.log(imid.value)
+    const data = await ChangeLine(lines.value, <string>imid.value)
+    if (data.code !== 200) {
+        ElMessage.error('操作失败')
+    }
+    ElMessage({
+        message: '操作成功',
+        type: 'success',
+    })
+}
+
+const addline = async()=>{
+    lines.value?.push(formInline.value)
+    console.log(lines.value)
+    formInline.value={
+        timeout : 30000,
+        ssl:2,
+        type:0,
+    }
 }
 
 

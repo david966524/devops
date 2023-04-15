@@ -1,9 +1,11 @@
 package model
 
-import "mygin/myutils"
+import (
+	"gorm.io/gorm"
+)
 
 type VhostResult struct {
-	myutils.ResponseBody
+	ResponseBody
 	Data struct {
 		Total int `json:"total"`
 		List  []struct {
@@ -49,4 +51,29 @@ type DomainPublicSetting struct {
 type DeleteDomaindome struct {
 	Id    string `json:"id";form:"id"`
 	Vhost string `json:"vhost";form:"vhost"`
+}
+
+type AsiaCloudAccount struct {
+	gorm.Model
+	Uid    string `form:"uid";gorm:"type:varchar(50);uniqueIndex;not null;comment:uid"`
+	Apikey string `form:"apikey";gorm:"type:varchar(50);not null;comment:密钥"`
+}
+
+// 亚洲云海
+type ResponseBody struct {
+	Code    int    `json:"code"`
+	Message string `json:"message"`
+}
+
+type LoginResult struct {
+	ResponseBody
+	Data struct {
+		Token string `json:"token"`
+	} `json:"data"`
+}
+
+type LoginPayload struct {
+	Sign string `json:"sign"`
+	Time int64  `json:"time"`
+	Uid  string `json:"uid"`
 }

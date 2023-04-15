@@ -12,7 +12,6 @@
             <el-table-column fixed="right" label="Operations" width="120">
                 <template #default="scope">
                     <el-button link type="primary" size="small" @click="">Edit</el-button>
-                    <el-button link type="primary" size="small">Edit</el-button>
                     <el-button link type="primary" size="small"  @click="deleteDomain(scope.row)">delete</el-button>
                 </template>
             </el-table-column>

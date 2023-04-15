@@ -68,7 +68,7 @@ func AddDomain(c *gin.Context) {
 	if err1 != nil {
 		log.Println(err1.Error())
 	}
-	var reqbody myutils.ResponseBody
+	var reqbody model.ResponseBody
 	err2 := json.Unmarshal(resp.Body(), &reqbody)
 	log.Println(reqbody)
 	if err2 != nil {

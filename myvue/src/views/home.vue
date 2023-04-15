@@ -26,7 +26,7 @@
             </template>
             <el-sub-menu index="4-1">
               <template #title>aliyun</template>
-              <el-menu-item index="">服务器列表</el-menu-item>
+              <el-menu-item index="/aliyun">服务器列表</el-menu-item>
               <el-menu-item index="">list</el-menu-item>
             </el-sub-menu>
           </el-sub-menu>

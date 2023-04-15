@@ -61,14 +61,14 @@ export interface Im {
 
 // im line对象
 export interface Line{
-    base_url:string
-    res_url:string
-    socket_ip:string
-    socket_port:number
+    base_url?:string
+    res_url?:string
+    socket_ip?:string
+    socket_port?:number
     timeout:number
-    ssl:number
-    remark:string
-    type:number
+    ssl?:number
+    remark?:string
+    type?:number
 }
 
 // asiacloudvhost 对象
@@ -84,4 +84,14 @@ export interface AsiacloudDomain{
     vhost?:string
     status?:number
     cname?:string
+}
+
+export interface AliyunEcs{
+    IpAddress?:string
+    ImageId:string
+    InstanceId:string
+    InstanceName:string
+    InstanceType:string
+    KeyPairName?:string
+    OSName:string
 }

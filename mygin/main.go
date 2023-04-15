@@ -24,7 +24,7 @@ func startServer() *gin.Engine {
 	router.AsiacloudRouter(r)
 	router.AirborneRouter(r)
 	router.ImRouter(r)
-
+	router.AliyunRouter(r)
 	logger := myutils.GetLogger()
 	logger.Info("this is  日志")
 

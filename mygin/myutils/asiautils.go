@@ -3,43 +3,17 @@ package myutils
 import (
 	"fmt"
 	"log"
+	"mygin/model"
 	"strconv"
 	"time"
-
-	"gorm.io/gorm"
 )
-
-type AsiaCloudAccount struct {
-	gorm.Model
-	Uid    string `form:"uid";gorm:"type:varchar(50);uniqueIndex;not null;comment:uid"`
-	Apikey string `form:"apikey";gorm:"type:varchar(50);not null;comment:密钥"`
-}
-
-// 亚洲云海
-type ResponseBody struct {
-	Code    int    `json:"code"`
-	Message string `json:"message"`
-}
-
-type LoginResult struct {
-	ResponseBody
-	Data struct {
-		Token string `json:"token"`
-	} `json:"data"`
-}
-
-type LoginPayload struct {
-	Sign string `json:"sign"`
-	Time int64  `json:"time"`
-	Uid  string `json:"uid"`
-}
 
 func GetAsiaCloudToken() string {
 	db, err := ConnectMysqlByDatabaseSql()
 	if err != nil {
 		log.Println(err.Error())
 	}
-	var accunot AsiaCloudAccount
+	var accunot model.AsiaCloudAccount
 	result := db.Where("id=?", 1).Find(&accunot)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
@@ -51,8 +25,8 @@ func GetAsiaCloudToken() string {
 	fmt.Println("当前时间戳  ", timestamp)
 	fmt.Println(fullapiMd5)
 	loginUrl := "https://cdnportal.myasiacloud.com/api/user/login/token"
-	var myresule LoginResult
-	mypayload := LoginPayload{
+	var myresule model.LoginResult
+	mypayload := model.LoginPayload{
 		Sign: fullapiMd5,
 		Time: timestamp,
 		Uid:  accunot.Uid,
