@@ -17,10 +17,10 @@
         <!-- table -->
         <el-table v-loading="loading" :data="domains" style="width: 100%">
             <!-- <el-table-column prop="id" label="Id" width="180" /> -->
-            <el-table-column prop="name" label="Name" width="180" />
-            <el-table-column prop="created_on" label="Created" width="200" />
-            <el-table-column prop="modified_on" label="Modified" width="200" />
-            <el-table-column prop="name_servers" label="Name Servers" width="350" />
+            <el-table-column prop="name" label="Name" width="200" />
+            <el-table-column prop="created_on" label="Created" width="250" />
+            <el-table-column prop="modified_on" label="Modified" width="250" />
+            <el-table-column prop="name_servers" label="Name Servers" width="400" />
             <el-table-column prop="status" label="Status" width="120" />
             <el-table-column fixed="right" label="Operations" width="200">
                 <template #default="scope">
@@ -283,7 +283,7 @@ const deleteDNSRecord = async (row: any) => {
   
 <style scoped>
 .container {
-    width: 80%;
+    width: 100%;
     margin: 0 auto;
     padding-top: 20px;
 }
