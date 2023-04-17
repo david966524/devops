@@ -321,3 +321,7 @@ time="2023-04-17 12:17:29" level=info msg="| 200 |  1.952728758s |  192.168.96.1
 time="2023-04-17 12:17:31" level=info msg="| 200 |   1.72110664s |  192.168.96.128 | GET | /asiacloud/vhost/my101-site-04"
 time="2023-04-17 12:17:35" level=info msg="| 200 |  1.888477736s |  192.168.96.128 | GET | /asiacloud/vhost/my101-site-03"
 time="2023-04-17 12:17:38" level=info msg="| 200 |  4.582618259s |  192.168.96.128 | GET | /cloudflare"
+time="2023-04-17 14:12:13" level=info msg="this is  日志"
+time="2023-04-17 14:12:25" level=info msg="| 200 |  1.206577851s |    172.30.0.248 | GET | /asiacloud/vhost"
+time="2023-04-17 14:12:29" level=info msg="| 200 |  1.677745311s |    172.30.0.248 | GET | /asiacloud/vhost/my101-site-03"
+time="2023-04-17 14:12:31" level=info msg="| 200 |  473.768253ms |    172.30.0.248 | GET | /aliyun"
