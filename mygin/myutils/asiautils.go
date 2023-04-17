@@ -32,7 +32,7 @@ func GetAsiaCloudToken() string {
 		Uid:  accunot.Uid,
 	}
 	fmt.Println(mypayload)
-	resp, err := HttpCline().R().
+	resp, err := HttpClinet().R().
 		SetHeader("Content-Type", "application/json").
 		SetResult(&myresule).
 		SetBody(&mypayload).

@@ -95,3 +95,15 @@ export interface AliyunEcs{
     KeyPairName?:string
     OSName:string
 }
+
+//checkdomainResult
+export interface checkdomainResult{
+    code?: number
+    url?: string
+    qq_msg?: string
+    vx_msg?: string
+    cause?: string
+    icp_name?: string
+    icp?: string
+    tips?: string
+}

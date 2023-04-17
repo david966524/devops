@@ -11,6 +11,7 @@ import Itdog from "../components/dnstools/itdog.vue"
 import Asiacloud from "../views/asiacloud.vue"
 import Aliyun from "../views/aliyun.vue"
 import Jenkins from "../components/dnstools/jenkins.vue"
+import CheckDomain from "../views/checkdomain.vue"
 // 使用路由项目类型声明一个路由数组
 const routes: Array<RouteRecordRaw> = [
     {
@@ -41,7 +42,8 @@ const routes: Array<RouteRecordRaw> = [
             {path: '/itdog',component: Itdog},
             {path: '/asiacloud',component: Asiacloud},
             {path: '/aliyun',component: Aliyun},
-            {path: '/jenkins',component: Jenkins}
+            {path: '/jenkins',component: Jenkins},
+            {path: '/checkdomain',component: CheckDomain}
         ]
       },
 ]

@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://172.30.0.58:8080',
+        target: 'http://172.30.0.58:8089',
         changeOrigin: true,  // 允许跨域
         rewrite: (path) => path.replace(/^\/api/, ''),
       }

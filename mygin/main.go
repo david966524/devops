@@ -25,6 +25,7 @@ func startServer() *gin.Engine {
 	router.AirborneRouter(r)
 	router.ImRouter(r)
 	router.AliyunRouter(r)
+	router.CheckDomainRouter(r)
 	logger := myutils.GetLogger()
 	logger.Info("this is  日志")
 
@@ -33,6 +34,6 @@ func startServer() *gin.Engine {
 
 func main() {
 	myutils.InitLogger()
-	startServer().Run()
+	startServer().Run(":8089")
 
 }

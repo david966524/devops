@@ -28,7 +28,7 @@ func GetLins(c *gin.Context) {
 }
 
 func ReqLines(url string) []model.Line {
-	client := myutils.HttpCline()
+	client := myutils.HttpClinet()
 	var datas model.Datas
 	resp, err := client.R().SetResult(&datas).EnableTrace().Get(url)
 	if err != nil {

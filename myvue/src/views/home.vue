@@ -42,6 +42,7 @@
               <!-- <template #title>DNS Tools</template> -->
               <el-menu-item index="/boce">拨测</el-menu-item>
               <el-menu-item index="/itdog">ITDog</el-menu-item>
+              <el-menu-item index="/checkdomain">域名检测</el-menu-item>
             </el-menu-item-group>
             <el-menu-item-group title="运维工具">
               <el-menu-item index="/jenkins">jenkins</el-menu-item>

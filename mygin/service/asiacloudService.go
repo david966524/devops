@@ -14,7 +14,7 @@ import (
 //////////////////////////////////////////////////////////
 
 func GetVhost(c *gin.Context) {
-	client := myutils.HttpCline()
+	client := myutils.HttpClinet()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
 	var vhostResult model.VhostResult
 	vhostUrl := "https://cdnportal.myasiacloud.com/api/proxy/vhost"
@@ -56,7 +56,7 @@ func AddDomain(c *gin.Context) {
 		log.Println(err.Error())
 	}
 	log.Println(domain)
-	client := myutils.HttpCline()
+	client := myutils.HttpClinet()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
 	addDomainUrl := "https://cdnportal.myasiacloud.com/api/site/" + vhost + "/domain"
 	resp, err1 := client.R().
@@ -92,7 +92,7 @@ func DeleteAsiacloudDomain(c *gin.Context) {
 }
 
 func reqDomainlist(vhost string) *model.DomainResult {
-	client := myutils.HttpCline()
+	client := myutils.HttpClinet()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
 	var domainResult model.DomainResult
 	getdomaintUrl := "https://cdnportal.myasiacloud.com/api/site/" + vhost + "/domain/page"
@@ -111,7 +111,7 @@ func reqDomainlist(vhost string) *model.DomainResult {
 
 func reqDeleteDomain(id string, vhost string) *model.DomainResult {
 	deletedomaintUrl := fmt.Sprintf("https://cdnportal.myasiacloud.com/api/site/%v/domain/%v", vhost, id)
-	client := myutils.HttpCline()
+	client := myutils.HttpClinet()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
 	resq, err := client.R().
 		EnableTrace().
