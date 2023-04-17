@@ -13,15 +13,17 @@
             <el-menu-item index="">方能</el-menu-item>
             <el-menu-item index="/asiacloud">亚洲云海</el-menu-item>
             <el-sub-menu index="1-1">
-              <template #title>包网项目</template>
+              <template #title>
+                <el-icon><Files /></el-icon>
+                包网项目</template>
               <el-menu-item index="/airborne">空降平台信息</el-menu-item>
               <el-menu-item index="/im">IM</el-menu-item>
             </el-sub-menu>
           </el-sub-menu>
-           <el-sub-menu index="4">
+          <el-sub-menu index="4">
             <template #title>
               <el-icon>
-                <icon-menu />
+                <Platform />
               </el-icon>服务器
             </template>
             <el-sub-menu index="4-1">
@@ -32,20 +34,22 @@
           </el-sub-menu>
           <el-sub-menu index="2">
             <template #title>
-              <el-icon><ChromeFilled /></el-icon>工具
+              <el-icon>
+                <ChromeFilled />
+              </el-icon>工具
             </template>
-            <el-menu-item-group>
-              <template #title>DNS Tools</template>
+            <el-menu-item-group title="DNS Tools">
+              <!-- <template #title>DNS Tools</template> -->
               <el-menu-item index="/boce">拨测</el-menu-item>
               <el-menu-item index="/itdog">ITDog</el-menu-item>
             </el-menu-item-group>
-            <el-menu-item-group title="Group 2">
-              <el-menu-item index="2-3">Option 3</el-menu-item>
+            <el-menu-item-group title="运维工具">
+              <el-menu-item index="/jenkins">jenkins</el-menu-item>
             </el-menu-item-group>
-            <el-sub-menu index="2-4">
+            <!-- <el-sub-menu index="2-4">
               <template #title>Option 4</template>
               <el-menu-item index="2-4-1">Option 4-1</el-menu-item>
-            </el-sub-menu>
+            </el-sub-menu> -->
           </el-sub-menu>
           <el-sub-menu index="3">
             <template #title>
@@ -56,7 +60,7 @@
             <el-menu-item-group>
               <template #title>用户管理</template>
               <el-menu-item index="/user">用户列表</el-menu-item>
-              <el-menu-item index="3-2">Option 2</el-menu-item>
+              <!-- <el-menu-item index="3-2">Option 2</el-menu-item> -->
             </el-menu-item-group>
           </el-sub-menu>
         </el-menu>
@@ -96,7 +100,7 @@ import { Menu as IconMenu, Message, Setting } from '@element-plus/icons-vue'
 
 
 
-
+const value = ref(new Date())
 
 const username = ref(localStorage.getItem('username'))
 
@@ -105,17 +109,20 @@ const username = ref(localStorage.getItem('username'))
 <style scoped>
 .layout-container-demo .el-header {
   position: relative;
-  background-color: var(--el-color-primary-light-7);
+  /* background-color: var(--el-color-primary-light-7); */
+  background-color: #FFFFFF;
   color: var(--el-text-color-primary);
 }
 
 .layout-container-demo .el-aside {
   color: var(--el-text-color-primary);
-  background: var(--el-color-primary-light-8);
+  /* background: var(--el-color-primary-light-8); */
+  background: #FFFFFF;
 }
 
 .layout-container-demo .el-menu {
   border-right: none;
+  background: var(--el-color-primary-light-8);
 }
 
 .layout-container-demo .el-main {

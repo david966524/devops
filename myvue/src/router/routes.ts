@@ -10,6 +10,7 @@ import Boce from "../components/dnstools/boce.vue"
 import Itdog from "../components/dnstools/itdog.vue"
 import Asiacloud from "../views/asiacloud.vue"
 import Aliyun from "../views/aliyun.vue"
+import Jenkins from "../components/dnstools/jenkins.vue"
 // 使用路由项目类型声明一个路由数组
 const routes: Array<RouteRecordRaw> = [
     {
@@ -39,7 +40,8 @@ const routes: Array<RouteRecordRaw> = [
             {path: '/boce',component: Boce},
             {path: '/itdog',component: Itdog},
             {path: '/asiacloud',component: Asiacloud},
-            {path: '/aliyun',component: Aliyun}
+            {path: '/aliyun',component: Aliyun},
+            {path: '/jenkins',component: Jenkins}
         ]
       },
 ]

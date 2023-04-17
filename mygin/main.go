@@ -15,7 +15,7 @@ func startServer() *gin.Engine {
 	// 跨域问题
 	config := cors.DefaultConfig()
 	config.AllowOrigins = []string{"*"}
-	r.Use(cors.New(config))
+	r.Use(cors.New(config), myutils.LoggerToFile())
 
 	//router
 	r.POST("/login", service.LoginUser)

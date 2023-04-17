@@ -57,20 +57,20 @@
                 </el-form-item>
                 <el-form-item label="port">
                     <el-select v-model="formInline.socket_port" placeholder="port">
-                        <el-option label="9326" value="9326" />
-                        <el-option label="9325" value="9325" />
+                        <el-option label="9326" :value="parseInt('9326')" />
+                        <el-option label="9325" :value="parseInt('9325')" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="ssl">
                     <el-select v-model="formInline.ssl" placeholder="ssl">
-                        <el-option label="1" value="1" />
-                        <el-option label="2" value="2" />
+                        <el-option label="1" :value="parseInt('1')" />
+                        <el-option label="2" :value="parseInt('2')" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="type">
                     <el-select v-model="formInline.type" placeholder="type">
-                        <el-option label="0" value="0" />
-                        <el-option label="1" value="1" />
+                        <el-option label="0" :value="parseInt('0')" />
+                        <el-option label="1" :value="parseInt('1')" />
                     </el-select>
                 </el-form-item>
                 <el-form-item label="备注">
@@ -81,6 +81,7 @@
                 </el-form-item>
             </el-form>
         </dev>
+        <el-divider />
         <el-table :data="lines" :edit-config="{ editMethod: 'cell' }">
             <el-table-column property="base_url" label="线路" width="220">
             </el-table-column>
@@ -97,6 +98,7 @@
                 </template>
             </el-table-column>
         </el-table>
+        <el-divider content-position="left">修改完记得保存</el-divider>
         <div>
             <el-button type="primary" @click="saveLines()">save</el-button>
         </div>
@@ -153,12 +155,12 @@ const im = ref<Im>({
 const ims = ref<Im[]>()
 const lines = ref<Line[]>([])
 const formInline = ref<Line>({
-    base_url:"",
-    res_url:"",
-    socket_ip:"",
-    socket_port: 9326 ,
+    base_url: "",
+    res_url: "",
+    socket_ip: "",
+    socket_port: 9326,
     timeout: 30000,
-    ssl: 2 ,
+    ssl: 2,
     remark: "",
     type: 0
 })
@@ -219,7 +221,7 @@ const getLines = async (row: Im) => {
     console.log(lines.value)
     imid.value = <string>row.ID
     formInline.value = {
-        timeout:30000,
+        timeout: 30000,
         res_url: lines.value[0].res_url,
         socket_ip: lines.value[0].socket_ip
     }
@@ -243,13 +245,13 @@ const saveLines = async () => {
     })
 }
 
-const addline = async()=>{
+const addline = async () => {
     lines.value?.push(formInline.value)
     console.log(lines.value)
-    formInline.value={
-        timeout : 30000,
-        ssl:2,
-        type:0,
+    formInline.value = {
+        timeout: 30000,
+        ssl: 2,
+        type: 0,
     }
 }
 
