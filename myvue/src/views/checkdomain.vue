@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Delete, Edit, Search, Share, Upload } from '@element-plus/icons-vue'
-import { ElMessage } from 'element-plus'
+import { ElMessage } from 'element-plus' 
 import { Ckeckdomain } from '../api/checkdomain'
 import { checkdomainResult } from '../interface/index'
 const input = ref<string>('')

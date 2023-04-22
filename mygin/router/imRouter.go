@@ -14,7 +14,7 @@ func ImRouter(r *gin.Engine) {
 		imRouter.POST("", service.AddIm)
 		imRouter.PUT("", service.UpdateIm)
 		imRouter.DELETE("", service.DeleteIm)
-		imRouter.POST("/line", service.GetLins)
+		imRouter.POST("/line", service.GetLines)
 		imRouter.POST("/line/:imid", service.ChangeLines)
 	}
 }

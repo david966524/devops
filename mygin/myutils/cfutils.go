@@ -8,13 +8,10 @@ import (
 	"gorm.io/gorm"
 )
 
+// cloudflare client
 func GetCfApi() *cloudflare.API {
-	db, err := ConnectMysqlByDatabaseSql()
-	if err != nil {
-		fmt.Println(err.Error())
-	}
 	var cfAccount CloudFlareAccount
-	db.Where("id=?", 1).Find(&cfAccount)
+	DBClinet.Where("id=?", 1).Find(&cfAccount)
 	log.Println("cfAccount_email: ", cfAccount.Email)
 	log.Println("cfAccount_key: ", cfAccount.Key)
 	api, err := cloudflare.New(cfAccount.Key, cfAccount.Email)

@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// get ecs列表
 func Getecslist(c *gin.Context) {
 	ecslist := ResqToMy()
 	c.JSON(http.StatusOK, gin.H{
@@ -20,6 +21,7 @@ func Getecslist(c *gin.Context) {
 	})
 }
 
+// 把返回的原始数据 转成 自己的
 func ResqToMy() []*model.Instance {
 	client, err := myutils.CreateClient()
 	if err != nil {

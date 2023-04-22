@@ -11,6 +11,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 获取所有域名
 func GetCloudFlare(c *gin.Context) {
 	fmt.Println("/cloudflare")
 	allDomainSlice := mycloudflare.GetAllDomain()
@@ -23,6 +24,7 @@ func GetCloudFlare(c *gin.Context) {
 
 }
 
+// 查询域名
 func QueryCloudFlare(c *gin.Context) {
 	domainName := c.Param("domainname")
 	fmt.Println(domainName)
@@ -39,6 +41,7 @@ func QueryCloudFlare(c *gin.Context) {
 
 // 另外，如果您想手动解析POST参数而不是使用结构体绑定功能，可以使用context对象的PostForm()方法来获取单个POST参数，或者使用context对象的Request.PostForm属性来获取所有的POST参数。具体实现方式与之前的回答相同，这里不再赘述。
 
+// 添加域名
 func AddCloudflare(c *gin.Context) {
 
 	//fmt.Println(result)
@@ -58,6 +61,7 @@ func AddCloudflare(c *gin.Context) {
 	})
 }
 
+// 删除域名
 func DeleteCloudflare(c *gin.Context) {
 	var req model.CloudflareRequest
 	c.ShouldBind(&req)
@@ -71,6 +75,7 @@ func DeleteCloudflare(c *gin.Context) {
 	}
 }
 
+// 获取域名 DNS 解析
 func GetDomainDns(c *gin.Context) {
 	domainName := c.Param("domainname")
 	log.Println(domainName)
@@ -83,6 +88,7 @@ func GetDomainDns(c *gin.Context) {
 	})
 }
 
+// 添加域名解析
 func AddDnsRecord(c *gin.Context) {
 	// 添加 DNS 解析记录
 	// dnsRecord := cloudflare.CreateDNSRecordParams{
@@ -110,6 +116,8 @@ func AddDnsRecord(c *gin.Context) {
 		"msg":  msg,
 	})
 }
+
+// 删除域名解析
 func DeleteDnsRecord(c *gin.Context) {
 	//domainId := c.Param("domainId")
 	//fmt.Println(domainId)

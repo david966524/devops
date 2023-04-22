@@ -8,13 +8,10 @@ import (
 	"time"
 )
 
+// 获取 亚洲云海token
 func GetAsiaCloudToken() string {
-	db, err := ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-	}
 	var accunot model.AsiaCloudAccount
-	result := db.Where("id=?", 1).Find(&accunot)
+	result := DBClinet.Where("id=?", 1).Find(&accunot)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 	}

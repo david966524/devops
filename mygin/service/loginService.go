@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// login
+// login 校验  发送token
 func LoginUser(c *gin.Context) {
 	var user model.User
 	err := c.ShouldBind(&user)
@@ -18,12 +18,8 @@ func LoginUser(c *gin.Context) {
 		log.Println(err.Error())
 	}
 
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-	}
 	var myuser model.User
-	if err := db.Where("user_name=?", user.UserName).First(&myuser).Error; err != nil {
+	if result := myutils.DBClinet.Where("user_name=?", user.UserName).First(&myuser); result.Error != nil {
 		log.Println(myuser.PassWord)
 		log.Println(err)
 		c.JSON(401, gin.H{

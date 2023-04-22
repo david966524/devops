@@ -21,11 +21,8 @@ func AddIm(c *gin.Context) {
 	if err != nil {
 		log.Println(err.Error())
 	}
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		fmt.Println(err.Error())
-	}
-	result := db.Create(&im)
+
+	result := myutils.DBClinet.Create(&im)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 	}
@@ -42,11 +39,7 @@ func UpdateIm(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-	}
-	result := db.Model(&im).Where("id=?", im.ID).Save(&im)
+	result := myutils.DBClinet.Model(&im).Where("id=?", im.ID).Save(&im)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 		return
@@ -59,11 +52,7 @@ func UpdateIm(c *gin.Context) {
 
 func GetIm(c *gin.Context) {
 	var ims []model.Im
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-	}
-	result := db.Find(&ims)
+	result := myutils.DBClinet.Find(&ims)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 	}
@@ -81,12 +70,7 @@ func DeleteIm(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-	result := db.Table("ims").Delete(&im)
+	result := myutils.DBClinet.Table("ims").Delete(&im)
 	if result.Error == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 200,
@@ -111,6 +95,7 @@ func ChangeLines(c *gin.Context) {
 	})
 }
 
+// 修改本地文件的方法
 // func savetofile(lines []model.Line, filename string) {
 // 	data := &model.Datas{
 // 		Data: model.Data{
@@ -135,6 +120,7 @@ func ChangeLines(c *gin.Context) {
 // 	w.Flush()
 // }
 
+// 向 腾讯cos 保存 修改好的 im 线路
 func savetocos(lines []model.Line, filename string) int {
 	data := &model.Datas{
 		Data: model.Data{
@@ -167,12 +153,9 @@ func savetocos(lines []model.Line, filename string) int {
 }
 
 func getfilename(imid string) string {
-	client, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-	}
+
 	var im model.Im
-	db := client.Where("id=?", imid).Find(&im)
+	db := myutils.DBClinet.Where("id=?", imid).Find(&im)
 	if db.Error != nil {
 		log.Println(db.Error.Error())
 	}

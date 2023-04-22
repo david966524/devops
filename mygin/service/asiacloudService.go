@@ -11,8 +11,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-//////////////////////////////////////////////////////////
-
+// ////////////////////////////////////////////////////////
+// 获取 云海vhost
 func GetVhost(c *gin.Context) {
 	client := myutils.HttpClinet()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
@@ -36,6 +36,7 @@ func GetVhost(c *gin.Context) {
 	})
 }
 
+// 获取 云海vhost 列表
 func GetVhostDomainlist(c *gin.Context) {
 	vhost := c.Param("vhost")
 	log.Println("请求的 vhost :" + vhost)
@@ -47,6 +48,7 @@ func GetVhostDomainlist(c *gin.Context) {
 	})
 }
 
+// 向云海添加域名
 func AddDomain(c *gin.Context) {
 	vhost := c.Param("vhost")
 	var domain model.DomainDetails
@@ -80,6 +82,7 @@ func AddDomain(c *gin.Context) {
 	})
 }
 
+// 删除云海域名
 func DeleteAsiacloudDomain(c *gin.Context) {
 	vhost := c.Param("vhost")
 	id := c.Param("id")
@@ -91,6 +94,7 @@ func DeleteAsiacloudDomain(c *gin.Context) {
 	})
 }
 
+// 使用 httpclient 请求 域名列表 根据vhost
 func reqDomainlist(vhost string) *model.DomainResult {
 	client := myutils.HttpClinet()
 	asiaCloudToken := myutils.GetAsiaCloudToken()
@@ -109,6 +113,7 @@ func reqDomainlist(vhost string) *model.DomainResult {
 	return &domainResult
 }
 
+// 使用 httpclient 删除域名
 func reqDeleteDomain(id string, vhost string) *model.DomainResult {
 	deletedomaintUrl := fmt.Sprintf("https://cdnportal.myasiacloud.com/api/site/%v/domain/%v", vhost, id)
 	client := myutils.HttpClinet()
@@ -130,6 +135,7 @@ func reqDeleteDomain(id string, vhost string) *model.DomainResult {
 	return &domainResult
 }
 
+// 使用 httpclient 更新 域名解析 （未完成）
 func UpdateDomain(c *gin.Context) {
 	var domainDetails model.DomainDetails
 	c.ShouldBind(&domainDetails)

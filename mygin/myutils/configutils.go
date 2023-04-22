@@ -6,8 +6,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+// viper 配置
 func GetConfig() *viper.Viper {
-
 	fmt.Println("get config")
 	v := viper.New()
 	v.SetConfigName("dbconfig")

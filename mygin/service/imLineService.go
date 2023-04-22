@@ -10,7 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func GetLins(c *gin.Context) {
+func GetLines(c *gin.Context) {
 	var im model.Im
 	err := c.ShouldBind(&im)
 	if err != nil {
@@ -27,6 +27,7 @@ func GetLins(c *gin.Context) {
 	}
 }
 
+// 通过 im 的url 字段获取im线路表
 func ReqLines(url string) []model.Line {
 	client := myutils.HttpClinet()
 	var datas model.Datas

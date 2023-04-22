@@ -1,7 +1,6 @@
 package service
 
 import (
-	"fmt"
 	"log"
 	"mygin/model"
 	"mygin/myutils"
@@ -10,15 +9,10 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// get 空降
 func GetAirBorneList(c *gin.Context) {
-
 	var airBorneList []model.AirBorne
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-	result := db.Find(&airBorneList)
+	result := myutils.DBClinet.Find(&airBorneList)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 		return
@@ -30,6 +24,7 @@ func GetAirBorneList(c *gin.Context) {
 	})
 }
 
+// 添加空降
 func AddAirBorne(c *gin.Context) {
 	var airBorne model.AirBorne
 	err := c.ShouldBind(&airBorne)
@@ -38,12 +33,7 @@ func AddAirBorne(c *gin.Context) {
 		return
 	}
 
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-	result := db.Create(&airBorne)
+	result := myutils.DBClinet.Create(&airBorne)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 		return
@@ -54,6 +44,7 @@ func AddAirBorne(c *gin.Context) {
 	})
 }
 
+// update 空降
 func UpdateAirBorne(c *gin.Context) {
 	var ab model.AirBorne
 	err := c.ShouldBind(&ab)
@@ -61,12 +52,8 @@ func UpdateAirBorne(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-	result := db.Model(&ab).Where("id=?", ab.ID).Save(&ab)
+
+	result := myutils.DBClinet.Model(&ab).Where("id=?", ab.ID).Save(&ab)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 		return
@@ -77,22 +64,16 @@ func UpdateAirBorne(c *gin.Context) {
 	})
 }
 
+// delete 空降
 func DeleteAirBorne(c *gin.Context) {
 	var ab model.AirBorne
 	err := c.ShouldBind(&ab)
 	log.Printf("%v --------------------------", &ab)
-
 	if err != nil {
 		log.Println(err.Error())
 		return
 	}
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-	fmt.Println(db)
-	result := db.Delete(&ab)
+	result := myutils.DBClinet.Delete(&ab)
 	if result.Error == nil {
 		c.JSON(http.StatusOK, gin.H{
 			"code": 200,

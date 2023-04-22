@@ -10,16 +10,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// 获取 user 列表
 func GetUserList(c *gin.Context) {
 
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-	}
 	var users []model.User
-	result := db.Find(&users)
+	result := myutils.DBClinet.Find(&users)
 	fmt.Println(result.RowsAffected)
-	log.Println(users)
+	myutils.GetLogger().Info(users)
 	c.JSON(http.StatusOK, gin.H{
 		"code": 200,
 		"msg":  "get all",
@@ -27,6 +24,7 @@ func GetUserList(c *gin.Context) {
 	})
 }
 
+// 添加 user
 func AddUser(c *gin.Context) {
 	var user model.User
 	err := c.ShouldBind(&user)
@@ -34,12 +32,7 @@ func AddUser(c *gin.Context) {
 		log.Println(err.Error())
 		return
 	}
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-	result := db.Create(&user)
+	result := myutils.DBClinet.Create(&user)
 	if result.Error != nil {
 		fmt.Println(result.Error.Error())
 		return
@@ -48,9 +41,9 @@ func AddUser(c *gin.Context) {
 		"code": 200,
 		"msg":  "用户添加成功",
 	})
-
 }
 
+// 修改用户 密码
 func ChangePassword(c *gin.Context) {
 	var user model.User
 	err := c.ShouldBind(&user)
@@ -59,12 +52,7 @@ func ChangePassword(c *gin.Context) {
 		return
 	}
 	log.Println("----change passwod" + user.UserName + user.PassWord)
-	db, err := myutils.ConnectMysqlByDatabaseSql()
-	if err != nil {
-		log.Println(err.Error())
-		return
-	}
-	result := db.Table("users").Where("id=?", user.ID).Update("pass_word", user.PassWord)
+	result := myutils.DBClinet.Table("users").Where("id=?", user.ID).Update("pass_word", user.PassWord)
 	if result.Error != nil {
 		log.Println(result.Error.Error())
 		return

@@ -11,7 +11,7 @@
             <el-table-column prop="cname" label="cname" />
             <el-table-column fixed="right" label="Operations" width="120">
                 <template #default="scope">
-                    <el-button link type="primary" size="small" @click="">Edit</el-button>
+                    <el-button link type="primary" size="small" @click="updateDomain(scope.row)">Edit</el-button>
                     <el-button link type="primary" size="small"  @click="deleteDomain(scope.row)">delete</el-button>
                 </template>
             </el-table-column>
@@ -103,6 +103,10 @@ const deleteDomain = async (row:AsiacloudDomain)=>{
             type: 'success',
         })
     
+}
+
+const updateDomain = async (row:AsiacloudDomain)=>{
+    console.log(row)
 }
 
 

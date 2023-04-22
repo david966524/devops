@@ -8,10 +8,6 @@ import (
 	"gorm.io/gorm"
 )
 
-func init() {
-	fmt.Println("run dbuitls")
-}
-
 // 基于database/sql连接，进行二次封装
 func ConnectMysqlByDatabaseSql() (*gorm.DB, error) {
 	config := GetConfig()
